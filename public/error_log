@@ -1,0 +1,16 @@
+[30-Dec-2024 15:33:35 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/netdigit/public_html/dashboard2/vendor/dompdf/dompdf/src/Frame/Factory.php on line 198
+[30-Dec-2024 15:33:47 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/netdigit/public_html/dashboard2/vendor/dompdf/dompdf/src/Frame/Factory.php on line 198
+[30-Dec-2024 15:33:55 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/netdigit/public_html/dashboard2/vendor/dompdf/dompdf/src/Frame/Factory.php on line 198
+[30-Dec-2024 15:34:17 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/netdigit/public_html/dashboard2/vendor/dompdf/dompdf/src/Frame/Factory.php on line 198
+[30-Dec-2024 15:35:01 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/netdigit/public_html/dashboard2/vendor/dompdf/dompdf/src/Frame/Factory.php on line 198
+[30-Dec-2024 15:37:12 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/netdigit/public_html/dashboard2/vendor/dompdf/dompdf/src/Frame/Factory.php on line 198
+[30-Dec-2024 15:44:12 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/netdigit/public_html/dashboard2/vendor/dompdf/dompdf/src/Frame/Factory.php on line 198
+[30-Dec-2024 15:46:44 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/netdigit/public_html/dashboard2/vendor/dompdf/dompdf/src/Frame/Factory.php on line 198
+[30-Dec-2024 15:56:58 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/netdigit/public_html/dashboard2/vendor/dompdf/dompdf/src/Frame/Factory.php on line 198
+[30-Dec-2024 15:58:03 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/netdigit/public_html/dashboard2/vendor/dompdf/dompdf/src/Cellmap.php on line 458
+[30-Dec-2024 11:51:35 UTC] PHP Warning:  require(/home/netdigit/public_html/dashboard2/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/netdigit/public_html/dashboard2/public/index.php on line 34
+[30-Dec-2024 11:51:35 UTC] PHP Warning:  require(/home/netdigit/public_html/dashboard2/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/netdigit/public_html/dashboard2/public/index.php on line 34
+[30-Dec-2024 11:51:35 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/netdigit/public_html/dashboard2/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/netdigit/public_html/dashboard2/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/netdigit/public_html/dashboard2/public/index.php on line 34

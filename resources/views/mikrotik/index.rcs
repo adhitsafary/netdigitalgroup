@@ -1,0 +1,340 @@
+:local nama "$user";
+:local bot "7085351448:AAErPRbIkJJOwkDTIMFUlwNU3AN_UQ1cRkY";
+:local chat "5985430823";
+:local ips [/ppp active get [find name=$nama] address];
+:local up [/ppp active get [find name=$nama] uptime];
+:local caller [/ppp active get [find name=$nama] caller-id];
+:local service [/ppp active get [find name=$nama] service];
+:local active [/ppp active print count];
+:local datetime "Tanggal: $[/system clock get date] %0AJam: $[/system clock get time]";
+
+:local lastdisc [/ppp secret get [find name=$nama] last-disconnect-reason];
+:local lastlogout [/ppp secret get [find name=$nama] last-logged-out];
+:local lastcall [/ppp secret get [find name=$nama] last-caller-id];
+
+/tool fetch url="https://api.telegram.org/bot$bot/sendMessage?chat_id=$chat&text=\E2\9C\85 PPPOE LOGIN%0AUser: $nama%0A$datetime%0AIP Client: $ips%0ACaller ID: $caller%0AUptime: $up%0ATotal Active: $active Client%0AService: $service%0ALast Disconnect Reason: $lastdisc%0ALast Logout: $lastlogout%0ALast Caller ID: $lastcall" mode=http keep-result=no;
+
+
+:local nama "$user";
+:local bot "7085351448:AAErPRbIkJJOwkDTIMFUlwNU3AN_UQ1cRkY";
+:local chat "5985430823";
+:local datetime "Tanggal: $[/system clock get date] %0AJam: $[/system clock get time]";
+:local active [/ppp active print count];
+
+:local lastdisc [/ppp secret get [find name=$nama] last-disconnect-reason];
+:local lastlogout [/ppp secret get [find name=$nama] last-logged-out];
+:local lastcall [/ppp secret get [find name=$nama] last-caller-id];
+
+/tool fetch url="https://api.telegram.org/bot$bot/sendMessage?chat_id=$chat&text=\E2\9D\8C PPPOE KONEKSI TERPUTUS%0AUser: $nama%0A$datetime%0ATotal Active: $active Client%0ALast Disconnect Reason: $lastdisc%0ALast Logout: $lastlogout%0ALast Caller ID: $lastcall" mode=http keep-result=no;
+
+
+
+
+:log warning "PPPOE $user login kembali.";
+
+:local nama "$user";
+:local ips [/ppp active get [find name=$nama] address];
+:local un [/ppp secret get [find name=$nama] name];
+:local pw [/ppp secret get [find name=$nama] password];
+:local serv [/ppp secret get [find name=$nama] service];
+:local profile [/ppp secret get [find name=$nama] profile];
+:local caller [/ppp active get [find name=$nama] caller-id];
+:local date "$[/system clock get date] $[/system clock get time]";
+:local secret [/ppp secret print count];
+:local status value="";
+:foreach pppuser in=[/ppp secret find ] do={
+ :local pppname [/ppp secret get $pppuser name]
+ :do {
+  :local tmp [/ppp active get [find where name="$pppname"]]
+ } on-error={
+  ##:put $pppname
+  :set status value=($status.$pppname.",%0A")
+ }
+};
+
+:local kodeprofile [/ppp profile get [find name=$profile] comment];
+
+:local hitung [:len [/system script find where name=$nama]];
+:if ( $hitung = 0 ) do={
+/system script add name=$nama source="0" comment="CEK TOTAL GANGGUAN";
+};
+
+:local getjumlah [:put ([/system script get [find name=$nama] source] + 1)];
+[/system script set source=$getjumlah "$nama"];
+
+:local active [/ppp active print count]; 
+:local terputus ($secret - $active)
+/tool fetch http-method=post http-data="text=\E2\9C\85 *TERHUBUNG KEMBALI*
+============================
+\E2\8F\B0 *$date*
+============================
+*INFO LAYANAN*
+\F0\9F\91\A5 Nama  : *$nama*
+\F0\9F\94\A3 Kode    : *$kodeprofile*
+\F0\9F\93\A6 Paket   : *$profile*
+\F0\9F\92\B6 Tagihan : *Rp.165.000,-*
+
+*INFO PERANGKAT*
+\F0\9F\94\90 Username : *$un*
+\F0\9F\94\90 Password : *$pw*
+\F0\9F\93\8C Services : *$serv*
+\F0\9F\86\94 IP Address : *$ips*
+\E2\93\82 MAC Address : *$caller*
+
+*STATUS GANGGUAN*
+\F0\9F\93\B4 Jmlh Gangguan : *$[/system script get [find name=$nama] source]x Terputus*
+============================
+*$secret* Total Secret
+*$active* Total Active
+============================
+User Terputus *($terputus)*:
+*$status*
+_Powered by,_
+*PT. Net Digital Group*" url="https://api.telegram.org/bot7085351448:AAErPRbIkJJOwkDTIMFUlwNU3AN_UQ1cRkY/sendMessage?chat_id=-5985430823&parse_mode=markdown" mode=https keep-result=no http-header-field="Content-Type: application/x-www-form-urlencoded; charset=UTF-8, User-Agent: Firefox";
+
+
+
+
+code final on up asli
+
+:log warning "PPPOE $user login kembali.";
+
+:local nama "$user";
+:local bot "7085351448:AAErPRbIkJJOwkDTIMFUlwNU3AN_UQ1cRkY";
+:local chat "5985430823";
+:local ips [/ppp active get [find name=$nama] address];
+:local un [/ppp secret get [find name=$nama] name];
+:local pw [/ppp secret get [find name=$nama] password];
+:local serv [/ppp secret get [find name=$nama] service];
+:local profile [/ppp secret get [find name=$nama] profile];
+:local caller [/ppp active get [find name=$nama] caller-id];
+:local date "$[/system clock get date] $[/system clock get time]";
+:local secret [/ppp secret print count];
+:local status value="";
+:foreach pppuser in=[/ppp secret find ] do={
+ :local pppname [/ppp secret get $pppuser name]
+ :do {
+  :local tmp [/ppp active get [find where name="$pppname"]]
+ } on-error={
+  :set status value=($status.$pppname.",%0A")
+ }
+};
+
+:local kodeprofile [/ppp profile get [find name=$profile] comment];
+
+:local hitung [:len [/system script find where name=$nama]];
+:if ( $hitung = 0 ) do={
+  /system script add name=$nama source="0" comment="CEK TOTAL GANGGUAN";
+};
+
+:local getjumlah [:put ([/system script get [find name=$nama] source] + 1)];
+[/system script set source=$getjumlah "$nama"];
+
+:local active [/ppp active print count]; 
+:local terputus ($secret - $active);
+
+# Kirim pesan ke Telegram dengan teks bold
+/tool fetch url="https://api.telegram.org/bot$bot/sendMessage?chat_id=$chat&text=\E2\9C\85 TERHUBUNG KEMBALI%0A============================%0A\E2\8F\B0 $date%0A============================%0AINFO LAYANAN%0A\F0\9F\91\A5 Nama  : $nama%0A\F0\9F\94\A3 Kode    : $kodeprofile%0A\F0\9F\93\A6 Paket   : $profile%0A\F0\9F\92\B6 Tagihan : Rp.165.000,-%0A%0AINFO PERANGKAT%0A\F0\9F\94\90 Username : $un%0A\F0\9F\94\90 Password : $pw%0A\F0\9F\93\8C Services : $serv%0A\F0\9F\86\94 IP Address : $ips%0A\E2\93\82 MAC Address : $caller%0A%0ASTATUS GANGGUAN%0A\F0\9F\93\B4 Jmlh Gangguan : $[/system script get [find name=$nama] source]x Terputus%0A============================%0A$secret Total Secret%0A$active Total Active%0A============================%0AUser Terputus ($terputus): %0A $status ============================%0APT. Net Digital Group%0A============================%0A" mode=http keep-result=no;
+
+
+
+code final on up
+
+:log warning "PPPOE $user login kembali.";
+
+:local nama "$user";
+:local bot "7085351448:AAErPRbIkJJOwkDTIMFUlwNU3AN_UQ1cRkY";
+:local chat "5985430823";
+:local ips [/ppp active get [find name=$nama] address];
+:local un [/ppp secret get [find name=$nama] name];
+:local pw [/ppp secret get [find name=$nama] password];
+:local serv [/ppp secret get [find name=$nama] service];
+:local profile [/ppp secret get [find name=$nama] profile];
+:local caller [/ppp active get [find name=$nama] caller-id];
+:local date "$[/system clock get date] $[/system clock get time]";
+:local lastdisc [/ppp secret get [find name=$nama] last-disconnect-reason];
+:local lastlogout [/ppp secret get [find name=$nama] last-logged-out];
+:local secret [/ppp secret print count];
+:local status value="";
+:foreach pppuser in=[/ppp secret find ] do={
+ :local pppname [/ppp secret get $pppuser name]
+ :do {
+  :local tmp [/ppp active get [find where name="$pppname"]]
+ } on-error={
+  :set status value=($status.$pppname.",%0A")
+ }
+};
+
+:local kodeprofile [/ppp profile get [find name=$profile] comment];
+
+:local hitung [:len [/system script find where name=$nama]];
+:if ( $hitung = 0 ) do={
+  /system script add name=$nama source="0" comment="CEK TOTAL GANGGUAN";
+};
+
+:local getjumlah [:put ([/system script get [find name=$nama] source] + 1)];
+[/system script set source=$getjumlah "$nama"];
+
+:local active [/ppp active print count]; 
+:local terputus ($secret - $active);
+
+# Kirim pesan ke Telegram dengan teks bold
+/tool fetch url="https://api.telegram.org/bot$bot/sendMessage?chat_id=$chat&text=\E2\9C\85 TERHUBUNG KEMBALI%0A============================%0A\E2\8F\B0 $date%0A============================%0AINFO LAYANAN%0A\F0\9F\91\A5 Nama  : $nama%0A\F0\9F\94\A3 Kode    : $kodeprofile%0A\F0\9F\93\A6 Paket   : $profile%0A\F0\9F\92\B6 Tagihan : Rp.165.000,-%0A%0AINFO PERANGKAT%0A\F0\9F\94\90 Username : $un%0A\F0\9F\94\90 Password : $pw%0A\F0\9F\93\8C Services : $serv%0A\F0\9F\86\94 IP Address : $ips%0A\E2\93\82 MAC Address : $caller%0A%0ASTATUS GANGGUAN%0A\F0\9F\93\B4 Jmlh Gangguan : $[/system script get [find name=$nama] source]x Terputus%0AAlasan Terputus: $lastdisc%0ATerakhir Logout: $lastlogout%0A============================%0A$secret Total Secret%0A$active Total Active%0A============================%0AUser Terputus ($terputus): %0A$status============================%0APT. Net Digital Group%0A============================%0A" mode=http keep-result=no;
+
+backup
+
+:local nama "$user";
+:local bot "7085351448:AAErPRbIkJJOwkDTIMFUlwNU3AN_UQ1cRkY";
+:local chat "5985430823";
+:local datetime "Tanggal: $[/system clock get date] %0AJam: $[/system clock get time]";
+:local active [/ppp active print count];
+
+
+:local profile [/ppp secret get [find name=$nama] profile];
+:local kodeprofile [/ppp profile get [find name=$profile] comment];
+:local date "$[/system clock get date] $[/system clock get time]";
+
+:local lastdisc [/ppp secret get [find name=$nama] last-disconnect-reason];
+:local lastlogout [/ppp secret get [find name=$nama] last-logged-out];
+:local lastcall [/ppp secret get [find name=$nama] last-caller-id];
+
+
+:local secret [/ppp secret print count];
+:local status value="";
+:foreach pppuser in=[/ppp secret find ] do={
+ :local pppname [/ppp secret get $pppuser name]
+ :do {
+  :local tmp [/ppp active get [find where name="$pppname"]]
+ } on-error={
+  :set status value=($status.$pppname.",%0A")
+ }
+};
+
+:local kodeprofile [/ppp profile get [find name=$profile] comment];
+
+:local hitung [:len [/system script find where name=$nama]];
+:if ( $hitung = 0 ) do={
+  /system script add name=$nama source="0" comment="CEK TOTAL GANGGUAN";
+};
+
+:local getjumlah [:put ([/system script get [find name=$nama] source] + 1)];
+[/system script set source=$getjumlah "$nama"];
+
+:local active [/ppp active print count]; 
+:local terputus ($secret - $active);
+
+/tool fetch url="https://api.telegram.org/bot$bot/sendMessage?chat_id=$chat&text=\E2\9D\8C PPPOE KONEKSI TERPUTUS%0A============================%0A\E2\8F\B0 $date%0A============================%0AINFO LAYANAN%0A\F0\9F\91\A5 Nama  : $nama%0A\F0\9F\94\A3 Kode    : $kodeprofile%0A\F0\9F\93\A6 Paket   : $profile%0A\F0\9F\92\B6 Tagihan : Rp.165.000,-%0A%0AINFO PERANGKAT%0A\F0\9F\94\90 Username : $un%0A\F0\9F\94\90 Password : $pw%0A\F0\9F\93\8C Services : $serv%0A\F0\9F\86\94 IP Address : $ips%0A\E2\93\82 MAC Address : $caller%0A%0ASTATUS GANGGUAN%0A\F0\9F\93\B4 Jmlh Gangguan : $[/system script get [find name=$nama] source]x Terputus%0AAlasan Terputus: $lastdisc%0ATerakhir Logout: $lastlogout%0A============================%0A$secret Total Secret%0A$active Total Active%0A============================%0AUser Terputus ($terputus): %0A$status============================%0APT. Net Digital Group%0A============================%0A" mode=http keep-result=no;
+
+
+
+
+
+
+:local nama "$user";
+:local bot "7085351448:AAErPRbIkJJOwkDTIMFUlwNU3AN_UQ1cRkY";
+:local chat "5985430823";
+:local datetime "Tanggal: $[/system clock get date] %0AJam: $[/system clock get time]";
+:local active [/ppp active print count];
+
+:local date "$[/system clock get date] $[/system clock get time]";
+
+:local lastdisc [/ppp secret get [find name=$nama] last-disconnect-reason];
+:local lastlogout [/ppp secret get [find name=$nama] last-logged-out];
+:local lastcall [/ppp secret get [find name=$nama] last-caller-id];
+
+/tool fetch url="https://api.telegram.org/bot$bot/sendMessage?chat_id=$chat&text=\E2\9D\8C PPPOE KONEKSI TERPUTUS%0A============================%0A\E2\8F\B0 $date%0A============================%0AINFO LAYANAN%0A\F0\9F\91\A5 Nama: $nama%0ATotal Active: $active Client%0AAlasan Terputus: $lastdisc%0ATerakhir Logout: $lastlogout%0A\E2\93\82 MAC Address: $lastcall" mode=http keep-result=no;
+
+
+
+backup baru
+
+:local nama "$user";
+:local bot "7085351448:AAErPRbIkJJOwkDTIMFUlwNU3AN_UQ1cRkY";
+:local chat "5985430823";
+:local datetime "Tanggal: $[/system clock get date] %0AJam: $[/system clock get time]";
+:local active [/ppp active print count];
+
+:local profile [/ppp secret get [find name=$nama] profile];
+:local kodeprofile [/ppp profile get [find name=$profile] comment];
+:local date "$[/system clock get date] $[/system clock get time]";
+
+:local lastdisc [/ppp secret get [find name=$nama] last-disconnect-reason];
+:local lastlogout [/ppp secret get [find name=$nama] last-logged-out];
+:local lastcall [/ppp secret get [find name=$nama] last-caller-id];
+
+:local secret [/ppp secret print count];
+:local status value="";
+:foreach pppuser in=[/ppp secret find ] do={
+ :local pppname [/ppp secret get $pppuser name]
+ :do {
+  :local tmp [/ppp active get [find where name="$pppname"]]
+ } on-error={
+  :set status value=($status.$pppname.",%0A")
+ }
+};
+
+:local kodeprofile [/ppp profile get [find name=$profile] comment];
+
+:local hitung [:len [/system script find where name=$nama]];
+:if ( $hitung = 0 ) do={
+  /system script add name=$nama source="0" comment="CEK TOTAL GANGGUAN";
+};
+
+:local getjumlah [:put ([/system script get [find name=$nama] source] + 1)];
+[/system script set source=$getjumlah "$nama"];
+
+:local active [/ppp active print count]; 
+:local terputus ($secret - $active);
+
+/tool fetch url="https://api.telegram.org/bot$bot/sendMessage?chat_id=$chat&text=\E2\9D\8C PPPOE KONEKSI TERPUTUS%0A============================%0A\E2\8F\B0 $date%0A============================%0AINFO LAYANAN%0A\F0\9F\91\A5 Nama  : $nama%0A\F0\9F\94\A3 Kode    : $kodeprofile%0A\F0\9F\93\A6 Paket   : $profile%0AAlasan Terputus: $lastdisc%0ATerakhir Logout: $lastlogout%0A\E2\93\82 MAC Address: $lastcall %0A============================%0A$secret Total Pelanggan%0A$active Total Active%0A============================%0AUser Terputus ($terputus): %0A$status" mode=http keep-result=no;
+
+maaf mau tanya pak, apakah bisa komunikasi 2 belah pihak antara telegram dan mikrotik,
+saya sudah buat bot telegram yang fungsinya mengirimkan pesan ketika ada user yang off/disconected ke telegram,
+nah pertanyaan ya apakah bisa dari telegram langsung, misal saya ketikan nama alex, nah nanti
+telegram membalas dengan memberikan data nama alex tersebut terimakasih pak
+
+
+
+baru ambil darimikrotik
+
+
+:log warning "PPPOE $user login kembali.";
+
+:local nama "$user";
+:local bot "7085351448:AAErPRbIkJJOwkDTIMFUlwNU3AN_UQ1cRkY";
+:local chat "5985430823";
+:local ips [/ppp active get [find name=$nama] address];
+:local un [/ppp secret get [find name=$nama] name];
+:local pw [/ppp secret get [find name=$nama] password];
+:local serv [/ppp secret get [find name=$nama] service];
+:local profile [/ppp secret get [find name=$nama] profile];
+:local caller [/ppp active get [find name=$nama] caller-id];
+:local date "$[/system clock get date] $[/system clock get time]";
+:local lastdisc [/ppp secret get [find name=$nama] last-disconnect-reason];
+:local lastlogout [/ppp secret get [find name=$nama] last-logged-out];
+:local secret [/ppp secret print count];
+:local status value="";
+:foreach pppuser in=[/ppp secret find ] do={
+ :local pppname [/ppp secret get $pppuser name]
+ :do {
+  :local tmp [/ppp active get [find where name="$pppname"]]
+ } on-error={
+  :set status value=($status.$pppname.",%0A")
+ }
+};
+
+:local kodeprofile [/ppp profile get [find name=$profile] comment];
+
+:local hitung [:len [/system script find where name=$nama]];
+:if ( $hitung = 0 ) do={
+  /system script add name=$nama source="0" comment="CEK TOTAL GANGGUAN";
+};
+
+:local getjumlah [:put ([/system script get [find name=$nama] source] + 1)];
+[/system script set source=$getjumlah "$nama"];
+
+:local active [/ppp active print count]; 
+:local terputus ($secret - $active);
+
+# Kirim pesan ke Telegram dengan teks bold
+/tool fetch url="https://api.telegram.org/bot$bot/sendMessage?chat_id=$chat&text=\E2\9C\85 TERHUBUNG KEMBALI%0A============================%0A\E2\8F\B0 $date%0A============================%0AINFO LAYANAN%0A\F0\9F\91\A5 Nama  : $nama%0A\F0\9F\94\A3 Kode    : $kodeprofile%0A\F0\9F\93\A6 Paket   : $profile%0A\F0\9F\92\B6 Tagihan : Rp.165.000,-%0A%0AINFO PERANGKAT%0A\F0\9F\94\90 Username : $un%0A\F0\9F\94\90 Password : $pw%0A\F0\9F\93\8C Services : $serv%0A\F0\9F\86\94 IP Address : $ips%0A\E2\93\82 MAC Address : $caller%0A%0ASTATUS GANGGUAN%0A\F0\9F\93\B4 Jmlh Gangguan : $[/system script get [find name=$nama] source]x Terputus%0AAlasan Terputus: $lastdisc%0ATerakhir Logout: $lastlogout%0A============================%0A$secret Total Secret%0A$active Total Active%0A============================%0AUser Terputus ($terputus): %0A $status ============================%0APT. Net Digital Group%0A============================%0A" mode=http keep-result=no;
